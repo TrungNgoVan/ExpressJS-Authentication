@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const logger = require('morgan');
 const mongoClient = require('mongoose');
-const util = require('util');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // Setup connect mongo database by mongoose
 mongoClient.connect('mongodb://127.0.0.1:27017/authentication') // return promise
