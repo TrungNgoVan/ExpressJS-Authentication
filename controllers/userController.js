@@ -170,7 +170,7 @@ const replaceUser = async (req, res, next) => {
 
 const secret = async (req, res, next) => {
     return res.status(200).json({
-        message: 'Called to secret function'
+        resource: true
     })
 }
 
