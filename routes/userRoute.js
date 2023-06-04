@@ -2,6 +2,8 @@
 
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
+require('../middlewares/passport');
 /**
  *!const router = require('express-promise-router')();
  * express-promise-router support handle try-catch.
@@ -30,11 +32,15 @@ router.route('/signup')
 router.route('/signin')
     .post(
         validateBody(schemas.authSignInSchema),
+        passport.authenticate('local', { session: false }),
         UserController.signin
     )
 
 router.route('/secret')
-    .get(UserController.secret)
+    .get(
+        passport.authenticate('jwt', { session: false }),
+        UserController.secret
+    )
 
 router.route('/:userID')
     .get(
