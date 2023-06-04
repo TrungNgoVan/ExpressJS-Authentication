@@ -6,9 +6,13 @@ const logger = require('morgan');
 const mongoClient = require('mongoose');
 const dotenv = require('dotenv');
 
-dotenv.config();
 
-// Setup connect mongo database by mongoose
+// Import routers 
+const userRouter = require('./routes/userRoute');
+const deckRouter = require('./routes/deckRoute');
+
+
+// Setup connect mongodb database by mongoose
 mongoClient.connect('mongodb://127.0.0.1:27017/authentication') // return promise
     .then(() => {
         console.log('Connect db successfully ✅');
@@ -17,29 +21,26 @@ mongoClient.connect('mongodb://127.0.0.1:27017/authentication') // return promis
         console.error(`Connect db failed with error ${err} ❌`);
     })
 
-// create app object
+// Create app object
 const app = express();
 
-const userRouter = require('./routes/userRoute');
-const deckRouter = require('./routes/deckRoute');
-
 // Middleware
-
+dotenv.config();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 
 // Routes
-
 app.get('/', (req, res, next) => {
     return res.status(200).json({
         message: 'Server is OK'
     })
 })
-
 app.use('/user', userRouter);
 app.use('/deck', deckRouter);
 
-// ! Error handle function
+
+
+// ! Error handle function 
 app.use((err, req, res, next) => {
     const error = app.get('env') === 'development' ? err : {};
     const status = err.status || 500;
