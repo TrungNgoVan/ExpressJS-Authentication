@@ -1,11 +1,11 @@
 'use strict'
 
+// Import packages
 const bodyParser = require('body-parser');
 const express = require('express');
 const logger = require('morgan');
 const mongoClient = require('mongoose');
 const dotenv = require('dotenv');
-
 
 // Import routers 
 const userRouter = require('./routes/userRoute');
@@ -37,8 +37,6 @@ app.get('/', (req, res, next) => {
 })
 app.use('/user', userRouter);
 app.use('/deck', deckRouter);
-
-
 
 // ! Error handle function 
 app.use((err, req, res, next) => {
